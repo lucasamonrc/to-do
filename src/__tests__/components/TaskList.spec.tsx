@@ -6,35 +6,35 @@ describe('App Page', () => {
   it('should be able to add a task', async () => {
     render(<TaskList />);
 
-    const taskInput = screen.getByPlaceholderText('Adicionar novo todo');
+    const taskInput = screen.getByPlaceholderText('Add new task');
     const addTaskButton = screen.getByTestId('add-task-button');
 
     fireEvent.change(taskInput, {
       target: {
-        value: 'Desafio ReactJS Ignite'
+        value: 'Challenge ReactJS Ignite'
       }
     });
     fireEvent.click(addTaskButton);
 
-    const addedFirstTaskTitle = screen.getByText('Desafio ReactJS Ignite');
+    const addedFirstTaskTitle = screen.getByText('Challenge ReactJS Ignite');
 
-    expect(addedFirstTaskTitle).toHaveTextContent('Desafio ReactJS Ignite');
+    expect(addedFirstTaskTitle).toHaveTextContent('Challenge ReactJS Ignite');
     expect(addedFirstTaskTitle.parentElement).not.toHaveClass('completed');
 
     fireEvent.change(taskInput, {
       target: {
-        value: 'Beber água'
+        value: 'Drink water'
       }
     });
     fireEvent.click(addTaskButton);
 
-    const addedSecondTaskTitle = screen.getByText('Beber água');
+    const addedSecondTaskTitle = screen.getByText('Drink water');
 
     expect(addedFirstTaskTitle).toBeInTheDocument();
-    expect(addedFirstTaskTitle).toHaveTextContent('Desafio ReactJS Ignite');
+    expect(addedFirstTaskTitle).toHaveTextContent('Challenge ReactJS Ignite');
     expect(addedFirstTaskTitle.parentElement).not.toHaveClass('completed');
 
-    expect(addedSecondTaskTitle).toHaveTextContent('Beber água');
+    expect(addedSecondTaskTitle).toHaveTextContent('Drink water');
     expect(addedSecondTaskTitle.parentElement).not.toHaveClass('completed');
 
     localStorage.clear();
@@ -49,19 +49,19 @@ describe('App Page', () => {
 
     expect(screen.queryByTestId('task')).not.toBeInTheDocument();
 
-    const taskInput = screen.getByPlaceholderText('Adicionar novo todo');
+    const taskInput = screen.getByPlaceholderText('Add new task');
 
     fireEvent.change(taskInput, {
       target: {
-        value: 'Desafio ReactJS Ignite'
+        value: 'Challenge ReactJS Ignite'
       }
     });
     
     fireEvent.click(addTaskButton);
 
-    const addedFirstTaskTitle = screen.getByText('Desafio ReactJS Ignite');
+    const addedFirstTaskTitle = screen.getByText('Challenge ReactJS Ignite');
 
-    expect(addedFirstTaskTitle).toHaveTextContent('Desafio ReactJS Ignite');
+    expect(addedFirstTaskTitle).toHaveTextContent('Challenge ReactJS Ignite');
 
     localStorage.clear();
   })
@@ -69,25 +69,25 @@ describe('App Page', () => {
   it('should be able to remove a task', async () => {
     render(<TaskList />);
 
-    const taskInput = screen.getByPlaceholderText('Adicionar novo todo');
+    const taskInput = screen.getByPlaceholderText('Add new task');
     const addTaskButton = screen.getByTestId('add-task-button');
 
     fireEvent.change(taskInput, {
       target: {
-        value: 'Desafio ReactJS Ignite'
+        value: 'Challenge ReactJS Ignite'
       }
     });
     fireEvent.click(addTaskButton);
 
     fireEvent.change(taskInput, {
       target: {
-        value: 'Beber água'
+        value: 'Drink water'
       }
     });
     fireEvent.click(addTaskButton);
 
-    const addedFirstTaskTitle = screen.getByText('Desafio ReactJS Ignite');
-    const addedSecondTaskTitle = screen.getByText('Beber água');
+    const addedFirstTaskTitle = screen.getByText('Challenge ReactJS Ignite');
+    const addedSecondTaskTitle = screen.getByText('Drink water');
 
     expect(addedFirstTaskTitle).toBeInTheDocument()
     expect(addedSecondTaskTitle).toBeInTheDocument();
@@ -105,19 +105,19 @@ describe('App Page', () => {
   it('should be able to check a task', () => {
     render(<TaskList />);
 
-    const taskInput = screen.getByPlaceholderText('Adicionar novo todo');
+    const taskInput = screen.getByPlaceholderText('Add new task');
     const addTaskButton = screen.getByTestId('add-task-button');
 
     fireEvent.change(taskInput, {
       target: {
-        value: 'Desafio ReactJS Ignite'
+        value: 'Challenge ReactJS Ignite'
       }
     });
     fireEvent.click(addTaskButton);
 
     fireEvent.change(taskInput, {
       target: {
-        value: 'Beber água'
+        value: 'Drink water'
       }
     });
     fireEvent.click(addTaskButton);
