@@ -18,32 +18,28 @@ export function TaskList() {
     if (!newTaskTitle) return;
 
     const newTask = { 
-      id: Math.floor(Math.random() * 100) + 1,
+      id: Math.random(),
       title: newTaskTitle,
       isComplete: false
     }
 
-    setTasks([...tasks, newTask]);
+    // setTasks([...tasks, newTask]); - danger, rendering may render the old state obsolte.
+    setTasks(oldState => [...oldState, newTask]); // assures that the values are up to date.
     setNewTaskTitle('');
   }
 
   function handleToggleTaskCompletion(id: number) {
-    const newTasks = tasks.map(task => {
-      if (task.id === id) {
-        task.isComplete = !task.isComplete;
-      }
+    const newTasks = tasks.map(task => task.id === id ? { 
+      ...task,
+      isComplete: !task.isComplete 
+    } : task);
 
-      return task;
-    });
-
-    setTasks([...newTasks]);
-    
+    setTasks(newTasks);    
   }
 
   function handleRemoveTask(id: number) {
-    const newTasks = tasks.filter(task => task.id !== id);
-
-    setTasks([...newTasks]);
+    const filteredTasks = tasks.filter(task => task.id !== id);
+    setTasks(filteredTasks);
   }
 
   return (
