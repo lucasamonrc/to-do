@@ -19,7 +19,7 @@ describe('App Page', () => {
     const addedFirstTaskTitle = screen.getByText('Desafio ReactJS Ignite');
 
     expect(addedFirstTaskTitle).toHaveTextContent('Desafio ReactJS Ignite');
-    expect(addedFirstTaskTitle.parentElement).not.toHaveClass('completed')
+    expect(addedFirstTaskTitle.parentElement).not.toHaveClass('completed');
 
     fireEvent.change(taskInput, {
       target: {
@@ -32,10 +32,12 @@ describe('App Page', () => {
 
     expect(addedFirstTaskTitle).toBeInTheDocument();
     expect(addedFirstTaskTitle).toHaveTextContent('Desafio ReactJS Ignite');
-    expect(addedFirstTaskTitle.parentElement).not.toHaveClass('completed')
+    expect(addedFirstTaskTitle.parentElement).not.toHaveClass('completed');
 
     expect(addedSecondTaskTitle).toHaveTextContent('Beber água');
-    expect(addedSecondTaskTitle.parentElement).not.toHaveClass('completed')
+    expect(addedSecondTaskTitle.parentElement).not.toHaveClass('completed');
+
+    localStorage.clear();
   })
 
   it('should not be able to add a task with a empty title', () => {
@@ -60,6 +62,8 @@ describe('App Page', () => {
     const addedFirstTaskTitle = screen.getByText('Desafio ReactJS Ignite');
 
     expect(addedFirstTaskTitle).toHaveTextContent('Desafio ReactJS Ignite');
+
+    localStorage.clear();
   })
 
   it('should be able to remove a task', async () => {
@@ -94,6 +98,8 @@ describe('App Page', () => {
 
     expect(addedFirstTaskTitle).not.toBeInTheDocument();
     expect(addedSecondTaskTitle).toBeInTheDocument();
+
+    localStorage.clear();
   })
 
   it('should be able to check a task', () => {
@@ -127,5 +133,7 @@ describe('App Page', () => {
 
     expect(addedSecondTask).toBeInTheDocument();
     expect(addedSecondTask).not.toHaveClass('completed');
-  })
-})
+
+    localStorage.clear();
+  });
+});

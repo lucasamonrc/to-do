@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import '../styles/tasklist.scss'
 
@@ -14,6 +14,16 @@ export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
+  useEffect(() => {
+    const stringfiedTasks = localStorage.getItem('to.do_tasks');
+
+    if (!stringfiedTasks) return;
+
+    const savedTasks = JSON.parse(stringfiedTasks);
+
+    setTasks(savedTasks);
+  }, []);
+
   function handleCreateNewTask() {
     if (!newTaskTitle) return;
 
@@ -25,6 +35,7 @@ export function TaskList() {
 
     // setTasks([...tasks, newTask]); - danger, rendering may render the old state obsolte.
     setTasks(oldState => [...oldState, newTask]); // assures that the values are up to date.
+    saveOnLocalStorage([...tasks, newTask]);
     setNewTaskTitle('');
   }
 
@@ -34,13 +45,20 @@ export function TaskList() {
       isComplete: !task.isComplete 
     } : task);
 
-    setTasks(newTasks);    
+    setTasks(newTasks);  
+    saveOnLocalStorage(newTasks);  
   }
 
   function handleRemoveTask(id: number) {
     const filteredTasks = tasks.filter(task => task.id !== id);
     setTasks(filteredTasks);
+    saveOnLocalStorage(filteredTasks);
   }
+
+  function saveOnLocalStorage(stateTasks: Task[]) {
+    const stringfiedTasks = JSON.stringify(stateTasks);
+    localStorage.setItem('to.do_tasks', stringfiedTasks);
+  } 
 
   return (
     <section className="task-list container">
