@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import '../styles/tasklist.scss'
 
-import { FiTrash, FiCheckSquare } from 'react-icons/fi'
+import { FiTrash, FiCheckSquare, FiChevronUp, FiChevronDown } from 'react-icons/fi'
 
 interface Task {
   id: number;
@@ -55,6 +55,19 @@ export function TaskList() {
     saveOnLocalStorage(filteredTasks);
   }
 
+  function handleMoveTask(id: number, action: 'up' | 'down') {
+    const reorderedTasks = [...tasks];
+    const indexOfTask = reorderedTasks.findIndex(task => task.id === id);
+    const indexOfOtherTask = action === 'up' ? indexOfTask - 1 : indexOfTask + 1;
+
+    const temp = reorderedTasks[indexOfTask];
+    reorderedTasks[indexOfTask] = reorderedTasks[indexOfOtherTask];
+    reorderedTasks[indexOfOtherTask] = temp;
+    
+    setTasks(reorderedTasks);
+    saveOnLocalStorage(reorderedTasks);
+  }
+
   function saveOnLocalStorage(stateTasks: Task[]) {
     const stringfiedTasks = JSON.stringify(stateTasks);
     localStorage.setItem('to.do_tasks', stringfiedTasks);
@@ -80,7 +93,7 @@ export function TaskList() {
 
       <main>
         <ul>
-          {tasks.map(task => (
+          {tasks.map((task, index) => (
             <li key={task.id}>
               <div className={task.isComplete ? 'completed' : ''} data-testid="task" >
                 <label className="checkbox-container">
@@ -95,9 +108,27 @@ export function TaskList() {
                 <p>{task.title}</p>
               </div>
 
-              <button type="button" data-testid="remove-task-button" onClick={() => handleRemoveTask(task.id)}>
-                <FiTrash size={16}/>
-              </button>
+              <div className="list-actions">
+                <button 
+                  type="button"
+                  className="move-task-button"
+                  disabled={index === 0}
+                  onClick={() => handleMoveTask(task.id, 'up')}
+                >
+                  <FiChevronUp size={16}/>
+                </button> 
+                <button 
+                  type="button"
+                  className="move-task-button"
+                  disabled={index === tasks.length - 1}
+                  onClick={() => handleMoveTask(task.id, 'down')}
+                >
+                  <FiChevronDown size={16}/>
+                </button>
+                <button type="button" data-testid="remove-task-button" onClick={() => handleRemoveTask(task.id)}>
+                  <FiTrash size={16}/>
+                </button>
+              </div>
             </li>
           ))}
           

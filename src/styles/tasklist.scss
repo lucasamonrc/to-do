@@ -72,7 +72,14 @@ section.task-list {
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid #EBEBEB;
-        padding: 1rem 0;
+        padding: 1rem;
+        transition: all .35s;
+
+        &:hover {
+          background: #f8f8f8;
+        }
+
+
 
         div {
           display: flex;
@@ -153,6 +160,20 @@ section.task-list {
             svg {
               filter: brightness(0.5)
             }
+          }
+
+          &:disabled {
+            opacity: 0;
+          }
+        }
+
+        button.move-task-button {
+          &:focus {
+            outline: none;
+          }
+
+          svg {
+            color: var(--text-light);
           }
         }
       }
